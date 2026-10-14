@@ -2,7 +2,6 @@
 include_once 'film.php';
 
 $erabiltzailea = isset($_POST['erabiltzailea']) ? $_POST['erabiltzailea'] : 'Gonbidatua';
-
 $filmakAsoziatiboa = [];
 
 if (isset($_POST['filmak_data']) && !empty($_POST['filmak_data'])) {
@@ -20,7 +19,6 @@ if (isset($_POST['filmak_data']) && !empty($_POST['filmak_data'])) {
         new Film("Matrix", "87655678", "1999", 5),
         new Film("Avatar", "11224488", "2009", 3)
     ];
-
     foreach ($pelikulaZerrenda as $film) {
         $filmakAsoziatiboa[$film->getISAN()] = [
             'izena' => $film->getIzena(),
@@ -32,7 +30,6 @@ if (isset($_POST['filmak_data']) && !empty($_POST['filmak_data'])) {
 
 $mezuAvisoa = "";
 $bilaketaEmaitzak = [];
-
 $inputIzena = "";
 $inputIsan = "";
 $inputUrtea = "";
@@ -40,11 +37,18 @@ $inputPuntuazioa = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'])) {
     
-    if (isset($_POST['izena'])) { $inputIzena = $_POST['izena']; }
-    if (isset($_POST['isan'])) { $inputIsan = $_POST['isan']; }
-    if (isset($_POST['urtea'])) { $inputUrtea = $_POST['urtea']; }
-    if (isset($_POST['puntuazioa'])) { $inputPuntuazioa = $_POST['puntuazioa']; }
-
+    if (isset($_POST['izena'])) { 
+        $inputIzena = $_POST['izena']; 
+        }
+    if (isset($_POST['isan'])) { 
+        $inputIsan = $_POST['isan']; 
+        }
+    if (isset($_POST['urtea'])) { 
+        $inputUrtea = $_POST['urtea']; 
+        }
+    if (isset($_POST['puntuazioa'])) { 
+        $inputPuntuazioa = $_POST['puntuazioa']; 
+        }
     if (empty($inputIzena) && empty($inputIsan)) {
         $mezuAvisoa = "ERROREA: Izena eta ISAN eremuak ezin dira biak hutsik egon.";
     }
@@ -73,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
             $filmakAsoziatiboa[$inputIsan]['puntuazioa'] = $inputPuntuazioa;
             $mezuAvisoa = "ISAN $inputIsan duen filmaren datuak eguneratu dira.";
         } else {
-            $mezuAvisoa = "WARNING: Filma eguneratzeko eremu guztiak beteta egon behar dira.";
+            $mezuAvisoa = "ERROREA: Filma eguneratzeko eremu guztiak beteta egon behar dira.";
         }
     }
     else {
@@ -85,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
             ];
             $mezuAvisoa = "Film berria ondo gorde da zerrendan!";
         } else {
-            $mezuAvisoa = "WARNING: ISANak 8 digitu izan behar ditu eta eremu guztiek balioak izan behar dituzte.";
+            $mezuAvisoa = "ERROREA: ISANak 8 digitu izan behar ditu eta eremu guztiek balioak izan behar dituzte.";
         }
     }
 }
@@ -98,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
 </head>
 <body>
     <h1><?= $erabiltzailea ?>REN FILMAK</h1>
-
     <h3>Filmen Zerrenda</h3>
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
@@ -120,13 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
             <?php endforeach; ?>
         </tbody>
     </table>
-
     <?php if (!empty($mezuAvisoa)): ?>
         <p style="color: red; font-weight: bold;">
             Oharra: <?= $mezuAvisoa ?>
         </p>
     <?php endif; ?>
-
     <?php if (!empty($bilaketaEmaitzak)): ?>
         <div>
             <h4>Bilaketaren emaitzak:</h4>
@@ -137,37 +138,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
             </ul>
         </div>
     <?php endif; ?>
-
     <hr>
-
     <div>
         <h3>Film Formularioa</h3>
         <form action="main.php" method="POST">
-            
             <input type="hidden" name="erabiltzailea" value="<?= $erabiltzailea ?>">
             <input type="hidden" name="formularioa_bidalita" value="1">
-
             <?php foreach ($filmakAsoziatiboa as $isanGakoa => $filmDatuak): ?>
                 <input type="hidden" name="filmak_data[<?= $isanGakoa ?>][izena]" value="<?= $filmDatuak['izena'] ?>">
                 <input type="hidden" name="filmak_data[<?= $isanGakoa ?>][urtea]" value="<?= $filmDatuak['urtea'] ?>">
                 <input type="hidden" name="filmak_data[<?= $isanGakoa ?>][puntuazioa]" value="<?= $filmDatuak['puntuazioa'] ?>">
             <?php endforeach; ?>
-
             <p>
                 <label for="izena">Filmaren Izena:</label><br>
                 <input type="text" id="izena" name="izena" value="<?= $inputIzena ?>">
             </p>
-
             <p>
                 <label for="isan">ISAN (8 digitu):</label><br>
                 <input type="text" id="isan" name="isan" value="<?= $inputIsan ?>">
             </p>
-
             <p>
                 <label for="urtea">Urtea:</label><br>
                 <input type="number" id="urtea" name="urtea" value="<?= $inputUrtea ?>">
             </p>
-
             <p>
                 <label for="puntuazioa">Puntuazioa (0tik 5era):</label><br>
                 <select id="puntuazioa" name="puntuazioa">
@@ -179,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
                     <?php endfor; ?>
                 </select>
             </p>
-
             <button type="submit" action="top_film.php">Bidali Formularioa</button>
         </form>
     </div>

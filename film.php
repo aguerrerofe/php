@@ -1,7 +1,4 @@
 <?php
-/**
- * Film Klasea: film bakoitzaren informazioa kudeatzeko PHP klasea.
- */
 class Film {
     private $izena;
     private $ISAN;

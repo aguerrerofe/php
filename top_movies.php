@@ -6,7 +6,6 @@
 </head>
 <body>
     <h2>Ongi etorri TOP Movies aplikaziora</h2>
-    
     <form action="top_film.php" method="POST">
         <p>
             <label for="erabiltzailea">Sartu zure izena:</label><br>

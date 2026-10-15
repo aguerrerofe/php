@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['formularioa_bidalita'
     <hr>
     <div>
         <h3>Film Formularioa</h3>
-        <form action="main.php" method="POST">
+        <form action="top_film.php" method="POST">
             <input type="hidden" name="erabiltzailea" value="<?= $erabiltzailea ?>">
             <input type="hidden" name="formularioa_bidalita" value="1">
             <?php foreach ($filmakAsoziatiboa as $isanGakoa => $filmDatuak): ?>
